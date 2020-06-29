@@ -1,0 +1,23 @@
+version: '3.3'
+services:
+    web:
+        image: registry.gitlab.com/hwdegroot/php-json-tool:${TAG:-php-7.4}
+        build: .
+        environment:
+            PORT: "${PORT:-8000}"
+        entrypoint: |
+            bash -c "composer install &&
+                    (
+                        (
+                            [[ -f .env ]] &&
+                            sed -i '/^APP_KEY=/d' .env
+                        ) ||
+                        cp .env.example .env
+                    ) &&
+                    php artisan key:generate --show
+                    php artisan serve --host=0.0.0.0 --port=${PORT}"
+        ports:
+            - ${PORT:-8000}:${PORT:-8000}
+        volumes:
+            - .:/var/opt
+        working_dir: /var/opt

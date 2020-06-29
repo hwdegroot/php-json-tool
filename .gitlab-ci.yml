@@ -1,0 +1,64 @@
+stages:
+    - lint
+    - test
+    - release
+
+variables:
+    GIT_DEPTH: 3
+
+.phpcache:
+    image: registry.gitlab.com/hwdegroot/php-json-tool:7.4
+    stage: lint
+    variables:
+        APP_NAME: php-json-tool
+    cache:
+        policy: pull
+        key: ${CI_COMMIT_REF_SLUG}
+        paths:
+            - vendor/
+    before_script:
+        - rm -f .php_cs.cache
+        - composer install --no-progress
+        - app_key=$(php artisan key:generate --show)
+        - export APP_KEY=$app_key
+
+cachefill:php:
+    extends: .phpcache
+    cache:
+        policy: pull-push
+    script:
+        - "true"
+
+lint:php:syntax:
+    extends: .phpcache
+    script:
+        - vendor/bin/parallel-lint app
+
+lint:php:fix-code-style:
+    extends: .phpcache
+    script:
+        - vendor/bin/php-cs-fixer fix --no-interaction --show-progress=dots -vvv
+
+lint:php:copy-paste:
+    extends: .phpcache
+    script:
+        - vendor/bin/phpcpd --fuzzy app
+
+lint:php:mess-detector:
+    extends: .phpcache
+    script:
+        - vendor/bin/phpmd app ansi codesize,controversial,design,naming,unusedcode
+
+coverage:
+    stage: test
+    extends: .phpcache
+    variables:
+        PORT: 9000
+    script:
+        - export APP_URL=http://localhost:${PORT}
+        - php artisan serve --port=${PORT} &
+        - sleep 1
+        - vendor/bin/pest --coverage
+    # won't work when output is colored
+    coverage: '/^Cov:\s*\d+\.\d+%/'
+
