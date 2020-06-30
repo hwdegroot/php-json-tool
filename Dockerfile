@@ -13,6 +13,7 @@ RUN apt-get update -qqy && \
     apt-get install -qqy \
       autoconf \
       gcc \
+      git \
       libc-dev \
       libmcrypt-dev \
       libmemcached-dev \
@@ -21,7 +22,8 @@ RUN apt-get update -qqy && \
       make \
       pkg-config \
       wget \
-      zlib1g-dev
+      zlib1g-dev \
+      zip
 
 RUN docker-php-source extract && \
     pecl install \
