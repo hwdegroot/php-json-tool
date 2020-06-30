@@ -55,6 +55,8 @@ coverage:
     variables:
         PORT: 9000
     script:
+        - rm -rf test-reports
+        - mkdir test-reports
         - export APP_URL=http://localhost:${PORT}
         - php artisan serve --port=${PORT} &
         - sleep 1
