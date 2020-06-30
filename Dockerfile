@@ -12,16 +12,12 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 RUN apt-get update -qqy && \
     apt-get install -qqy \
       autoconf \
-      curl \
       gcc \
-      libbz2-dev \
       libc-dev \
-      libcurl4-openssl-dev \
       libmcrypt-dev \
       libmemcached-dev \
       libonig-dev \
       libxml2-dev \
-      libzip-dev \
       make \
       pkg-config \
       wget \
@@ -33,17 +29,13 @@ RUN docker-php-source extract && \
         memcached \
         mcrypt && \
     docker-php-ext-enable memcached && \
-    docker-php-ext-configure zip && \
     docker-php-source delete
 
 RUN docker-php-ext-install \
       bcmath \
-      bz2 \
-      curl \
       mbstring  \
       json \
-      xml \
-      zip
+      xml
 
 RUN echo "memory_limit = -1" > /usr/local/etc/php/conf.d/zz-php-memory.ini && \
     echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/zz-xdebug.ini && \
