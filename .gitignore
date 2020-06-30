@@ -9,6 +9,8 @@
 .php_cs.cache
 test-reports/
 
+# Git
+*.orig
 
 # IDE
 .sw[a-z]
