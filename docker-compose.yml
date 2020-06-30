@@ -7,14 +7,8 @@ services:
             PORT: "${PORT:-8000}"
         entrypoint: |
             bash -c "composer install &&
-                    (
-                        (
-                            [[ -f .env ]] &&
-                            sed -i '/^APP_KEY=/d' .env
-                        ) ||
-                        cp .env.example .env
-                    ) &&
-                    php artisan key:generate --show
+                    touch .env &&
+                    php artisan key:generate --ansi
                     php artisan serve --host=0.0.0.0 --port=${PORT}"
         ports:
             - ${PORT:-8000}:${PORT:-8000}
