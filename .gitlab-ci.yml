@@ -58,7 +58,12 @@ coverage:
         - export APP_URL=http://localhost:${PORT}
         - php artisan serve --port=${PORT} &
         - sleep 1
-        - vendor/bin/pest --coverage
+        - vendor/bin/pest
+            --coverage
+            --log-junit=test-reports/pest-results.xml
+    artifacts:
+        reports:
+            junit: test-reports/pest-results.xml
     # won't work when output is colored
     coverage: '/^Cov:\s*\d+\.\d+%/'
 
