@@ -3,7 +3,7 @@
 namespace App\Http\Middleware\Api;
 
 use Closure;
-use Str;
+use Illuminate\Support\Str;
 
 class RequestHeader
 {

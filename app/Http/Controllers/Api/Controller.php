@@ -6,7 +6,7 @@ use App\Enum\SupportedFileTypes;
 use App\Exceptions\InvalidFiletypeException;
 use File;
 use Illuminate\Http\UploadedFile;
-use Str;
+use Illuminate\Support\Str;
 
 abstract class Controller
 {

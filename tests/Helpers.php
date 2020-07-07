@@ -3,8 +3,8 @@
 namespace Tests;
 
 use File;
+use Illuminate\Support\Str;
 use PHPUnit\Framework\Assert as PHPUnit;
-use Str;
 
 /**
  * A basic assert example.
