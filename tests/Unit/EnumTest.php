@@ -48,6 +48,14 @@ it('should get all keys', function () {
     );
 });
 
+it('can be converted to a string value', function () {
+    $this->assertSame('test', TestEnum::create('test')->jsonSerialize());
+});
+
+it('can retrieve the value', function () {
+    $this->assertSame('test', TestEnum::create('test')->getValue());
+});
+
 it('should have a value', function () {
     $this->assertTrue(TestEnum::hasValue('test'));
     $this->assertTrue(TestEnum::hasValue(TestEnum::NO_TEST));

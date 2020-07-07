@@ -4,7 +4,7 @@ namespace App\Enum;
 
 use App\Exceptions\EnumException;
 use App\Exceptions\UnsupportedFiletypeException;
-use Str;
+use Illuminate\Support\Str;
 
 class SupportedFileTypes extends Enum
 {
