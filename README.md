@@ -2,7 +2,7 @@
 [![coverage report](https://gitlab.com/hwdegroot/php-json-tool/badges/master/coverage.svg)](https://gitlab.com/hwdegroot/php-json-tool/commits/master)
 
 
-An api to convert json to php associative arrays or export as CSV.
+An api to convert between json files and php associative arrays or export as CSV.
 
 See [Examples](#endpoints) for more detail on the usage
 
@@ -140,3 +140,7 @@ EXCEPTIONS
 `curl /api/v1/convert -H "X-Output-Format: csv" -F "data=@path/to/file.json"`
 
 
+## TODO
+
+* [ ] Allow conversion from CSV files
+  - add `--delimiter` option (default: `\t`)
