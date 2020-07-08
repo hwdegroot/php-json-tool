@@ -74,7 +74,6 @@ coverage:
 deploy:
     stage: deploy
     image: ruby:latest
-    extends: .phpcache
     before_script:
         - gem install dpl
         - echo CI_COMMIT_REF_NAME=$CI_COMMIT_REF_NAME >> .env
@@ -83,7 +82,7 @@ deploy:
         - echo SOURCE_VERSION=$CI_COMMIT_SHA >> .env
     script:
         - dpl --skip_cleanup --provider=heroku --app=php-json-tool --api-key=$HEROKU_API_KEY --strategy=api
-          #only:
-          #    - tags
+    only:
+        - tags
     when: manual
 
