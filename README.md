@@ -8,6 +8,8 @@ See [Examples](#endpoints) for more detail on the usage
 
 Location of the repository [php-json-tool](https://gitlab.com/hwdegroot/php-json-tool)
 
+You can try it out [https://php-json-tool.herokuapp.com/](https://php-json-tool.herokuapp.com/)
+
 ## Getting started
 
 ### Clone
