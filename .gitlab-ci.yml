@@ -74,6 +74,7 @@ coverage:
 deploy:
     stage: deploy
     image: ruby:latest
+    extends: .phpcache
     before_script:
         - gem install dpl
         - echo CI_COMMIT_REF_NAME=$CI_COMMIT_REF_NAME >> .env
