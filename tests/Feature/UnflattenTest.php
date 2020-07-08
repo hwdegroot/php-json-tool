@@ -50,7 +50,7 @@ it('should nest a file from JSON to PHP', function () {
     assertSnapshotEquals('nested.php', $response);
 });
 
-it('should nest a PHP file to JSON', function () {
+it('should nest a file from PHP to JSON', function () {
     $response = $this->post(
         '/api/v1/unflatten/'.Str::uuid().'.json',
         [
@@ -65,7 +65,7 @@ it('should nest a PHP file to JSON', function () {
     assertSnapshotEquals('nested.json', $response);
 });
 
-it('should not allow nesting a file from CSV to PHP', function () {
+it('should nest a file from CSV to PHP', function () {
     $response = $this->post(
         '/api/v1/unflatten/'.Str::uuid().'.php',
         [
@@ -76,12 +76,28 @@ it('should not allow nesting a file from CSV to PHP', function () {
             ),
         ]
     );
-    $this->assertEquals(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $response->getStatusCode());
+    $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    assertSnapshotEquals('nested.php', $response);
 });
 
-it('should not allow nestin flatten a file from CSV to JSON', function () {
+it('should nest a file from CSV to JSON', function () {
     $response = $this->post(
         '/api/v1/unflatten/'.Str::uuid().'.json',
+        [
+            'file' => new UploadedFile(
+                base_path('tests/__snapshots__/flat.csv'),
+                'flat.csv',
+                SupportedFileTypes::CSV
+            ),
+        ]
+    );
+    $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    assertSnapshotEquals('nested.json', $response);
+});
+
+it('should not allow nesting a file to CSV', function () {
+    $response = $this->post(
+        '/api/v1/unflatten/'.Str::uuid().'.csv',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.csv'),

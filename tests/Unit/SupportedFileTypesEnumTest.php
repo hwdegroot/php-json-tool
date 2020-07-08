@@ -28,6 +28,10 @@ it('gets CSV file extension', function () {
     $this->assertEquals('csv', SupportedFileTypes::create('text/csv')->getFileExtension());
 });
 
+it('gets CSV file extension from plain text', function () {
+    $this->assertEquals('csv', SupportedFileTypes::create('text/plain')->getFileExtension());
+});
+
 it('gets JSON file extension', function () {
     $this->assertEquals('json', SupportedFileTypes::create('application/json')->getFileExtension());
 });
