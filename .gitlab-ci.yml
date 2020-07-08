@@ -62,10 +62,11 @@ coverage:
         - sleep 1
         - vendor/bin/pest
             --coverage
-            --log-junit=test-reports/pest-results.xml
+            --log-junit=test-reports/pest-results.xml | tee test-output.txt
+        - cat test-output.txt | grep --color=never 'Cov'
     artifacts:
         reports:
             junit: test-reports/pest-results.xml
     # won't work when output is colored
-    coverage: '/^Cov:\s*([^%]+)/'
+    coverage: '/\s+Cov:\s*([0-9.]+)%/'
 
