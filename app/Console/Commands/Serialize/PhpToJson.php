@@ -41,8 +41,6 @@ class PhpToJson extends SerializeCommand
      */
     public function handle()
     {
-        \Log::error($this->option());
-        \Log::error($this->argument());
         $this->verifyOptionFlags();
 
         $rawData = (bool) $this->option('raw');
