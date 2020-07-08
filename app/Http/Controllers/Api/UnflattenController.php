@@ -20,8 +20,8 @@ class UnflattenController extends Controller
         $fromType = $this->getFromFiletype($file);
         $toType = $this->getOutputFiletype($unflatFilename);
 
-        if ($fromType == SupportedFileTypes::CSV) {
-            throw new UnsupportedFiletypeException('Nesting from CSV is currently not supported');
+        if ($toType == SupportedFileTypes::CSV) {
+            throw new UnsupportedFiletypeException('Can not unflatten to CSV');
         }
 
         $unflattenedFile = $this->unflatten($file, $fromType, $toType);
@@ -46,6 +46,12 @@ class UnflattenController extends Controller
 
         if ($fromType == SupportedFileTypes::PHP) {
             $command = 'serialize:php2json';
+        } elseif ($fromType == SupportedFileTypes::CSV) {
+            $command = 'serialize:csv2php';
+
+            if ($toType == SupportedFileTypes::JSON) {
+                $arguments['--to-json'] = true;
+            }
         } else {
             $command = 'serialize:json2php';
         }

@@ -2,7 +2,8 @@
 
 namespace Tests;
 
-use File;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\Assert as PHPUnit;
 
@@ -12,6 +13,11 @@ use PHPUnit\Framework\Assert as PHPUnit;
 function assertExample(): void
 {
     test()->assertTrue(true);
+}
+
+function log(...$messages): void
+{
+    Log::error(...$messages);
 }
 
 function assertSnapshotEquals(string $snapshotLocation, $response)

@@ -4,6 +4,7 @@ namespace App\Enum;
 
 use App\Exceptions\EnumException;
 use App\Exceptions\UnsupportedFiletypeException;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class SupportedFileTypes extends Enum
@@ -11,6 +12,13 @@ class SupportedFileTypes extends Enum
     const PHP = 'text/x-php';
     const JSON = 'application/json';
     const CSV = 'text/csv';
+
+    public static function mappings()
+    {
+        return [
+            'text/plain' => self::CSV,
+        ];
+    }
 
     /**
      * {@inheritdoc}
@@ -36,6 +44,15 @@ class SupportedFileTypes extends Enum
         $inverted = array_combine(static::values(), static::keys());
 
         return Str::lower($inverted[$this->value]);
+    }
+
+    public static function create($value): self
+    {
+        if (Arr::exists(self::mappings(), $value)) {
+            $value = Arr::get(self::mappings(), $value);
+        }
+
+        return parent::create($value);
     }
 
     /**

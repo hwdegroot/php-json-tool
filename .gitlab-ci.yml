@@ -1,7 +1,7 @@
 stages:
     - lint
     - test
-    - release
+    - deploy
 
 variables:
     GIT_DEPTH: 3
@@ -62,10 +62,27 @@ coverage:
         - sleep 1
         - vendor/bin/pest
             --coverage
-            --log-junit=test-reports/pest-results.xml
+            --log-junit=test-reports/pest-results.xml | tee test-output.txt
+        - cat test-output.txt | grep --color=never 'Cov'
     artifacts:
         reports:
             junit: test-reports/pest-results.xml
     # won't work when output is colored
-    coverage: '/^Cov:\s*\d+\.\d+%/'
+    coverage: '/\s+Cov:\s*([0-9.]+)%/'
+
+
+deploy:
+    stage: deploy
+    image: ruby:latest
+    before_script:
+        - gem install dpl
+        - echo CI_COMMIT_REF_NAME=$CI_COMMIT_REF_NAME >> .env
+        - echo CI_COMMIT_SHA=$CI_COMMIT_SHA >> .env
+        - echo CI_COMMIT_TAG=$CI_COMMIT_TAG >> .env
+        - echo SOURCE_VERSION=$CI_COMMIT_SHA >> .env
+    script:
+        - dpl --skip_cleanup --provider=heroku --app=php-json-tool --api-key=$HEROKU_API_KEY --strategy=api
+    only:
+        - tags
+    when: manual
 

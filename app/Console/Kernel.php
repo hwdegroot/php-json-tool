@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\Serialize\JsonToPhp::class,
         Commands\Serialize\PhpToJson::class,
+        Commands\Serialize\CsvToPhp::class,
     ];
 
     /**

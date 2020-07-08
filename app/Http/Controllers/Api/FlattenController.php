@@ -36,7 +36,6 @@ class FlattenController extends Controller
 
     private function flatten(string $filename, $fromType, $toType)
     {
-        \Log::error($fromType);
         $tmpFile = stream_get_meta_data(tmpfile());
         $arguments = [
             'filename' => $filename,

@@ -5,8 +5,8 @@ namespace App\Console\Commands\Serialize;
 use App\Console\Exceptions\MissingArgumentException;
 use App\Console\Exceptions\NotSupportedException;
 use App\Console\Exceptions\UnsupportedArgumentException;
-use File;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 function hasStringKeys(array $array): bool

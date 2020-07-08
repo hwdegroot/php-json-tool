@@ -1,5 +1,5 @@
 [![pipeline status](https://gitlab.com/hwdegroot/php-json-tool/badges/master/pipeline.svg)](https://gitlab.com/hwdegroot/php-json-tool/commits/master)
-[![coverage report](https://gitlab.com/hwdegroot/php-json-tool/badges/master/coverage.svg)](https://gitlab.com/hwdegroot/php-json-tool/commits/master)
+[![coverage report](https://gitlab.com/hwdegroot/php-json-tool/badges/master/coverage.svg?job=coverage)](https://gitlab.com/hwdegroot/php-json-tool/commits/master)
 
 
 An api to convert between json files and php associative arrays or export as CSV.
@@ -7,6 +7,8 @@ An api to convert between json files and php associative arrays or export as CSV
 See [Examples](#endpoints) for more detail on the usage
 
 Location of the repository [php-json-tool](https://gitlab.com/hwdegroot/php-json-tool)
+
+You can try it out [https://php-json-tool.herokuapp.com/](https://php-json-tool.herokuapp.com/)
 
 ## Getting started
 
@@ -93,7 +95,7 @@ POST /api/v1/flatten/nestedfile.ext
 
 DATA
 
-file php|json
+file php|json|csv
 
 RESPONSE
 
@@ -107,8 +109,10 @@ EXCEPTIONS
 
 #### Examples
 
-`curl /api/v1/unflatten/unflat.php -F "file=@path/to/nested.json"`
-`curl /api/v1/unflatten/unflat.csv -F "file=@path/to/nested.php"`
+`curl /api/v1/flatten/flat.php -F "file=@path/to/nested.json"`
+`curl /api/v1/flatten/flat.json -F "file=@path/to/nested.php"`
+`curl /api/v1/flatten/flat.csv -F "file=@path/to/nested.json"`
+`curl /api/v1/flatten/flat.csv -F "file=@path/to/nested.php"`
 
 
 ### Conversion between types
@@ -122,7 +126,7 @@ POST /api/v1/convert/convertedfile.ext
 
 DATA
 
-file json|php
+file json|php|csv
 
 RESPONSE
 
@@ -132,15 +136,13 @@ EXCEPTIONS
 
 415 unsupported input format
 415 unsupported ounput format
+400 unsupported conversion
 ```
 
 
 #### Examples
 
-`curl /api/v1/convert -H "X-Output-Format: csv" -F "data=@path/to/file.json"`
+`curl /api/v1/convert/file.php -F "data=@path/to/file.json"`
+`curl /api/v1/convert/file.csv -F "data=@path/to/file.php"`
+`curl /api/v1/convert/file.json -F "data=@path/to/file.csv"`
 
-
-## TODO
-
-* [ ] Allow conversion from CSV files
-  - add `--delimiter` option (default: `\t`)
