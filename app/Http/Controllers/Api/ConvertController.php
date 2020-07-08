@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Enum\SupportedFileTypes;
 use APp\Exceptions\ConversionFailedException;
 use App\Exceptions\UnsupportedConversionException;
-use App\Exceptions\UnsupportedFiletypeException;
 use Artisan;
 use Illuminate\Http\Request;
 
@@ -20,10 +19,6 @@ class ConvertController extends Controller
 
         $fromType = $this->getFromFiletype($file);
         $toType = $this->getOutputFiletype($convertedFilename);
-
-        if ($toType == SupportedFileTypes::CSV || $fromType == SupportedFileTypes::CSV) {
-            throw new UnsupportedFiletypeException('Conversion is only supported between php and json');
-        }
 
         if ($toType == $fromType) {
             throw new UnsupportedConversionException("Can only convert between same filetypes {$fromType}");
@@ -41,7 +36,7 @@ class ConvertController extends Controller
             ->deleteFileAfterSend();
     }
 
-    private function convert(string $filename, SupportedFileTypes $fromType)
+    private function convert(string $filename, SupportedFileTypes $fromType, SupportedFileTypes $toType)
     {
         $tmpFile = stream_get_meta_data(tmpfile());
         $arguments = [
@@ -51,6 +46,12 @@ class ConvertController extends Controller
 
         if ($fromType == SupportedFileTypes::PHP) {
             $command = 'serialize:php2json';
+        } elseif ($fromType == SupportedFileTypes::CSV) {
+            $command = 'serialize:csv2php';
+
+            if ($toType == SupportedFileTypes::JSON) {
+                $arguments['--to-json'] = true;
+            }
         } else {
             $command = 'serialize:json2php';
         }

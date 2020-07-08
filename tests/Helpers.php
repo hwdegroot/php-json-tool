@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use File;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use PHPUnit\Framework\Assert as PHPUnit;

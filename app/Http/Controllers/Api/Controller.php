@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Enum\SupportedFileTypes;
 use App\Exceptions\InvalidFiletypeException;
-use File;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Str;
 
 abstract class Controller
@@ -36,17 +36,6 @@ abstract class Controller
 
         return SupportedFileTypes::create(
             File::mimeType($file)
-        );
-    }
-
-    /**
-     * Get the original filename from the uploaded file.
-     */
-    protected function getFilename(UploadedFile $file): string
-    {
-        return pathinfo(
-            $file->getClientOriginalName(),
-            PATHINFO_FILENAME
         );
     }
 }

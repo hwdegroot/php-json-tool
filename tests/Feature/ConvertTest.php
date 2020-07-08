@@ -3,6 +3,7 @@
 use App\Enum\SupportedFileTypes;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 use function Tests\assertSnapshotEquals;
 
 it('should convert a file from PHP to JSON', function () {
@@ -35,26 +36,71 @@ it('should convert a file from JSON to PHP', function () {
     assertSnapshotEquals('nested.json', $response);
 });
 
-it('should not support conversion from CSV', function () {
+it('should convert a file from CSV to PHP', function () {
     $response = $this->post(
-        '/api/v1/convert/'.Str::uuid().'.csv',
+        '/api/v1/convert/'.Str::uuid().'.php',
         [
             'file' => new UploadedFile(
-                base_path('tests/__snapshots__/nested.php'),
-                'nested.php',
-                SupportedFileTypes::PHP
+                base_path('tests/__snapshots__/flat.csv'),
+                'flat.csv',
+                SupportedFileTypes::CSV
             ),
         ]
     );
-    $this->assertEquals(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $response->getStatusCode());
+    $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    assertSnapshotEquals('flat-unmodified.php', $response);
+
+    $response = $this->post(
+        '/api/v1/convert/'.Str::uuid().'.php',
+        [
+            'file' => new UploadedFile(
+                base_path('tests/__snapshots__/flat.csv'),
+                'flat.csv',
+                'text/plain'
+            ),
+        ]
+    );
+    $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    assertSnapshotEquals('flat-unmodified.php', $response);
 });
 
-it('should not support conversion to CSV', function () {
+it('should convert a file from CSV to JSON', function () {
     $response = $this->post(
         '/api/v1/convert/'.Str::uuid().'.json',
         [
-            'file' => UploadedFile::fake()
-                ->create('unsupported.xml', 0, 'application/xml'),
+            'file' => new UploadedFile(
+                base_path('tests/__snapshots__/flat.csv'),
+                'flat.csv',
+                SupportedFileTypes::CSV
+            ),
+        ]
+    );
+    $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    assertSnapshotEquals('flat-unmodified.json', $response);
+
+    $response = $this->post(
+        '/api/v1/convert/'.Str::uuid().'.json',
+        [
+            'file' => new UploadedFile(
+                base_path('tests/__snapshots__/flat.csv'),
+                'flat.csv',
+                'text/plain'
+            ),
+        ]
+    );
+    $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+    assertSnapshotEquals('flat-unmodified.json', $response);
+});
+
+it('should not support conversion between same filetypes', function () {
+    $response = $this->post(
+        '/api/v1/convert/'.Str::uuid().'.json',
+        [
+            'file' => new UploadedFile(
+                base_path('tests/__snapshots__/flat.json'),
+                'flat.json',
+                SupportedFileTypes::JSON
+            ),
         ]
     );
     $this->assertEquals(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $response->getStatusCode());
