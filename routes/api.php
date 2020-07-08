@@ -18,7 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::get(
     '/health',
     function () {
-        return response()->json('OK', Response::HTTP_OK);
+        return response()->json(
+            [
+                'version' => env('CI_COMMIT_TAG', 'dev'),
+                'sha' => env('CI_COMMIT_SHA', 'dev'),
+            ],
+            Response::HTTP_OK
+        );
     }
 );
 
