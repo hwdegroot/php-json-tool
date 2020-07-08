@@ -103,5 +103,5 @@ it('should not support conversion between same filetypes', function () {
             ),
         ]
     );
-    $this->assertEquals(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $response->getStatusCode());
+    $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
 });

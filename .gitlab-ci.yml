@@ -67,5 +67,5 @@ coverage:
         reports:
             junit: test-reports/pest-results.xml
     # won't work when output is colored
-    coverage: '/^Cov:\s*\d+\.\d+%/'
+    coverage: '/^Cov:\s*([^%]+)/'
 

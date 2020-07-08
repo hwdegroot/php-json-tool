@@ -9,6 +9,6 @@ class UnsupportedConversionException extends HttpException
 {
     public function __construct(string $message)
     {
-        parent::__construct(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $message);
+        parent::__construct(Response::HTTP_BAD_REQUEST, $message);
     }
 }
