@@ -10,6 +10,8 @@ Location of the repository [php-json-tool](https://gitlab.com/hwdegroot/php-json
 
 You can try it out [https://php-json-tool.herokuapp.com/](https://php-json-tool.herokuapp.com/)
 
+Check out the current running version: [https://php-json-tool.herokuapp.com/api/v1/health](https://php-json-tool.herokuapp.com/api/v1/health)
+
 ## Getting started
 
 ### Clone
