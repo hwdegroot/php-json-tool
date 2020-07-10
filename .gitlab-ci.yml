@@ -68,10 +68,10 @@ coverage:
         reports:
             junit: test-reports/pest-results.xml
     # won't work when output is colored
-    coverage: '/\s+Cov:\s*([0-9.]+)%/'
+    coverage: '/\s*Cov:\s*([0-9.]+)%/'
 
 
-deploy:
+.deploy:
     stage: deploy
     image: ruby:latest
     before_script:
@@ -81,8 +81,22 @@ deploy:
         - echo CI_COMMIT_TAG=$CI_COMMIT_TAG >> .env
         - echo SOURCE_VERSION=$CI_COMMIT_SHA >> .env
     script:
-        - dpl --skip_cleanup --provider=heroku --app=php-json-tool --api-key=$HEROKU_API_KEY --strategy=api
+        - dpl --skip_cleanup --provider=heroku --app=$HEROKU_APP --api-key=$HEROKU_API_KEY --strategy=api
+
+deploy_staging:
+    extends: .deploy
+    variables:
+        HEROKU_APP: php-json-tool-staging
+    except:
+        - tags
+    when: manual
+
+deploy_production:
+    extends: .deploy
+    variables:
+        HEROKU_APP: php-json-tool
     only:
         - tags
     when: manual
+
 

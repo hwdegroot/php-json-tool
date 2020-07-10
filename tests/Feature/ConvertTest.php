@@ -8,7 +8,7 @@ use function Tests\assertSnapshotEquals;
 
 it('should convert a file from PHP to JSON', function () {
     $response = $this->post(
-        '/api/v1/convert/'.Str::uuid().'.php',
+        '/api/convert/'.Str::uuid().'.php',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/nested.json'),
@@ -23,7 +23,7 @@ it('should convert a file from PHP to JSON', function () {
 
 it('should convert a file from JSON to PHP', function () {
     $response = $this->post(
-        '/api/v1/convert/'.Str::uuid().'.json',
+        '/api/convert/'.Str::uuid().'.json',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/nested.php'),
@@ -38,7 +38,7 @@ it('should convert a file from JSON to PHP', function () {
 
 it('should convert a file from CSV to PHP', function () {
     $response = $this->post(
-        '/api/v1/convert/'.Str::uuid().'.php',
+        '/api/convert/'.Str::uuid().'.php',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.csv'),
@@ -51,7 +51,7 @@ it('should convert a file from CSV to PHP', function () {
     assertSnapshotEquals('flat-unmodified.php', $response);
 
     $response = $this->post(
-        '/api/v1/convert/'.Str::uuid().'.php',
+        '/api/convert/'.Str::uuid().'.php',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.csv'),
@@ -66,7 +66,7 @@ it('should convert a file from CSV to PHP', function () {
 
 it('should convert a file from CSV to JSON', function () {
     $response = $this->post(
-        '/api/v1/convert/'.Str::uuid().'.json',
+        '/api/convert/'.Str::uuid().'.json',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.csv'),
@@ -79,7 +79,7 @@ it('should convert a file from CSV to JSON', function () {
     assertSnapshotEquals('flat-unmodified.json', $response);
 
     $response = $this->post(
-        '/api/v1/convert/'.Str::uuid().'.json',
+        '/api/convert/'.Str::uuid().'.json',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.csv'),
@@ -94,7 +94,7 @@ it('should convert a file from CSV to JSON', function () {
 
 it('should not support conversion between same filetypes', function () {
     $response = $this->post(
-        '/api/v1/convert/'.Str::uuid().'.json',
+        '/api/convert/'.Str::uuid().'.json',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.json'),

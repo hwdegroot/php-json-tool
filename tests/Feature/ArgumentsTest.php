@@ -4,13 +4,13 @@ use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 
 it('has no file passed fails with InvalidFiletypeException', function () {
-    $response = $this->post('/api/v1/convert/thisshouldfail.json');
+    $response = $this->post('/api/convert/thisshouldfail.json');
     $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
 });
 
 it('has an unsupported file in the input fails with UnsupportedFileTypeException', function () {
     $response = $this->post(
-        '/api/v1/convert/output.json',
+        '/api/convert/output.json',
         [
             'file' => UploadedFile::fake()
                 ->create('unsupported.xml', 0, 'application/xml'),
@@ -21,7 +21,7 @@ it('has an unsupported file in the input fails with UnsupportedFileTypeException
 
 it('has an unsupported file in the output fails with UnsupportedFileTypeException', function () {
     $response = $this->post(
-        '/api/v1/convert/output.xml',
+        '/api/convert/output.xml',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/nested.json'),

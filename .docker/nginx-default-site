@@ -1,0 +1,59 @@
+##
+# You should look at the following URL's in order to grasp a solid understanding
+# of Nginx configuration files in order to fully unleash the power of Nginx.
+# https://www.nginx.com/resources/wiki/start/
+# https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+# https://wiki.debian.org/Nginx/DirectoryStructure
+#
+# In most cases, administrators will remove this file from sites-enabled/ and
+# leave it as reference inside of sites-available where it will continue to be
+# updated by the nginx packaging team.
+#
+# This file will automatically load configuration files provided by other
+# applications, such as Drupal or Wordpress. These applications will be made
+# available underneath a path with that package name, such as /drupal8.
+#
+# Please see /usr/share/doc/nginx-doc/examples/ for more detailed examples.
+##
+
+# Default server configuration
+#
+upstream php-fpm {
+    server unix:/run/php/php-fpm.sock;
+    keepalive 16;
+}
+
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+
+    root /var/opt/public;
+
+    index index.php index.html index.htm;
+
+    server_name _;
+
+    # Same content as in nginx_app.conf
+    # In the future, replace this data
+    location / {
+        try_files $uri $uri/ @rewriteapp;
+
+        #only allow GET and POST requests
+        if ($request_method !~ (GET|POST)$) {
+            return 404;
+        }
+    }
+
+    location ~ \.php$ {
+        try_files $uri /index.php =404;
+        fastcgi_pass php-fpm;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location @rewriteapp {
+        rewrite ^(.*)$ /index.php$is_args$args last;
+    }
+}
+

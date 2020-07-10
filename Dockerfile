@@ -1,4 +1,4 @@
-FROM php:7.4
+FROM php:7.4-fpm
 
 MAINTAINER Rik de Groot <hwdegroot@gmail.com>
 
@@ -20,6 +20,7 @@ RUN apt-get update -qqy && \
       libonig-dev \
       libxml2-dev \
       make \
+      nginx \
       pkg-config \
       wget \
       zlib1g-dev \
@@ -44,7 +45,7 @@ RUN echo "memory_limit = -1" > /usr/local/etc/php/conf.d/zz-php-memory.ini && \
     echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/zz-xdebug.ini && \
     echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/zz-xdebug.ini
 
-RUN mkdir -p $COMPOSER_HOME/bin && \
+RUN mkdir -p $COMPOSER_HOME/bin /run/php/ && \
     wget -q https://getcomposer.org/installer -O $COMPOSER_HOME/composer-setup.php && \
     php $COMPOSER_HOME/composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
     php -r "unlink('$COMPOSER_HOME/composer-setup.php');" && \
@@ -54,9 +55,13 @@ RUN rm -rf /var/cache/apt/* \
     $COMPOSER_HOME/composer-setup.php \
     /tmp/*
 
+COPY .docker/zz-docker.conf /usr/local/etc/php-fpm.d/zz-docker.conf
+COPY .docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY .docker/nginx-default-site /etc/nginx/sites-available/default
+
 VOLUME /var/opt
 WORKDIR /var/opt
 
 EXPOSE $PORT
 
-ENTRYPOINT []
+ENTRYPOINT ["entrypoint.sh"]

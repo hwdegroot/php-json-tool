@@ -3,14 +3,12 @@ services:
     web:
         image: registry.gitlab.com/hwdegroot/php-json-tool:${TAG:-php-7.4}
         build: .
-        environment:
-            PORT: "${PORT:-8000}"
-        entrypoint: |
-            bash -c 'composer install &&
-                    php artisan key:generate --show | xargs -i printf "APP_KEY=%s\n" {} > .env  &&
-                    php artisan serve --host=0.0.0.0 --port=${PORT}'
+        command: 'chgrp www-data -R storage bootstrap/cache &&
+                  chmod -R ug+rwx storage bootstrap/cache &&
+                  cp .env.example .env &&
+                  composer install'
         ports:
-            - ${PORT:-8000}:${PORT:-8000}
+            - 8080:80
         volumes:
             - .:/var/opt
         working_dir: /var/opt

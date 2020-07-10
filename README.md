@@ -1,7 +1,3 @@
-[![pipeline status](https://gitlab.com/hwdegroot/php-json-tool/badges/master/pipeline.svg)](https://gitlab.com/hwdegroot/php-json-tool/commits/master)
-[![coverage report](https://gitlab.com/hwdegroot/php-json-tool/badges/master/coverage.svg?job=coverage)](https://gitlab.com/hwdegroot/php-json-tool/commits/master)
-
-
 An api to convert between json files and php associative arrays or export as CSV.
 
 See [Examples](#endpoints) for more detail on the usage
@@ -10,7 +6,7 @@ Location of the repository [php-json-tool](https://gitlab.com/hwdegroot/php-json
 
 You can try it out [https://php-json-tool.herokuapp.com/](https://php-json-tool.herokuapp.com/)
 
-Check out the current running version: [https://php-json-tool.herokuapp.com/api/v1/health](https://php-json-tool.herokuapp.com/api/v1/health)
+Check out the current running version: [https://php-json-tool.herokuapp.com/api/health](https://php-json-tool.herokuapp.com/api/health)
 
 ## Getting started
 
@@ -25,10 +21,10 @@ git clone https://gitlab.com/hwdegroot/php-json-tool.git
 ### Run
 
 ```
-[PORT=8000] docker-compose up --build
+docker-compose up --build
 ```
 
-Running at port 8000 (default)
+Running at port 8080
 
 ### Lint
 
@@ -47,11 +43,11 @@ docker-compose run web test
 ### Health status
 
 ```
-GET /api/v1/health
+GET /api/health
 
 Response 200
 ```
-`curl /api/v1/health`
+`curl /api/health`
 
 
 ### Nest flat structures
@@ -63,7 +59,7 @@ is given in the request url
 
 
 ```
-POST /api/v1/unflatten/flatfile.ext
+POST /api/unflatten/flatfile.ext
 
 DATA
 
@@ -81,9 +77,9 @@ EXCEPTIONS
 
 #### Examples
 
-`curl /api/v1/unflatten/unflat.php -F "file=@path/to/flat.json"`
-`curl /api/v1/unflatten/unflat.csv -F "file=@path/to/flat.php"`
-`curl /api/v1/unflatten/unflat.json -F "file=@path/to/flat.php"`
+`curl /api/unflatten/unflat.php -F "file=@path/to/flat.json"`
+`curl /api/unflatten/unflat.csv -F "file=@path/to/flat.php"`
+`curl /api/unflatten/unflat.json -F "file=@path/to/flat.php"`
 
 
 ### flatten nested structures
@@ -93,7 +89,7 @@ The input file type will be automatically detected, snd the output filename will
 is given in the request url
 
 ```
-POST /api/v1/flatten/nestedfile.ext
+POST /api/flatten/nestedfile.ext
 
 DATA
 
@@ -111,10 +107,10 @@ EXCEPTIONS
 
 #### Examples
 
-`curl /api/v1/flatten/flat.php -F "file=@path/to/nested.json"`
-`curl /api/v1/flatten/flat.json -F "file=@path/to/nested.php"`
-`curl /api/v1/flatten/flat.csv -F "file=@path/to/nested.json"`
-`curl /api/v1/flatten/flat.csv -F "file=@path/to/nested.php"`
+`curl /api/flatten/flat.php -F "file=@path/to/nested.json"`
+`curl /api/flatten/flat.json -F "file=@path/to/nested.php"`
+`curl /api/flatten/flat.csv -F "file=@path/to/nested.json"`
+`curl /api/flatten/flat.csv -F "file=@path/to/nested.php"`
 
 
 ### Conversion between types
@@ -124,7 +120,7 @@ The input file type will be automatically detected, snd the output filename will
 is given in the request url
 
 ```
-POST /api/v1/convert/convertedfile.ext
+POST /api/convert/convertedfile.ext
 
 DATA
 
@@ -144,7 +140,7 @@ EXCEPTIONS
 
 #### Examples
 
-`curl /api/v1/convert/file.php -F "data=@path/to/file.json"`
-`curl /api/v1/convert/file.csv -F "data=@path/to/file.php"`
-`curl /api/v1/convert/file.json -F "data=@path/to/file.csv"`
+`curl /api/convert/file.php -F "data=@path/to/file.json"`
+`curl /api/convert/file.csv -F "data=@path/to/file.php"`
+`curl /api/convert/file.json -F "data=@path/to/file.csv"`
 
