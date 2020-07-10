@@ -7,7 +7,7 @@ use function Tests\assertSnapshotEquals;
 
 it('should nest a file from PHP to PHP', function () {
     $response = $this->post(
-        '/api/v1/unflatten/'.Str::uuid().'.php',
+        '/api/unflatten/'.Str::uuid().'.php',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.php'),
@@ -22,7 +22,7 @@ it('should nest a file from PHP to PHP', function () {
 
 it('should nest a file from JSON to JSON', function () {
     $response = $this->post(
-        '/api/v1/unflatten/'.Str::uuid().'.json',
+        '/api/unflatten/'.Str::uuid().'.json',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.json'),
@@ -37,7 +37,7 @@ it('should nest a file from JSON to JSON', function () {
 
 it('should nest a file from JSON to PHP', function () {
     $response = $this->post(
-        '/api/v1/unflatten/'.Str::uuid().'.php',
+        '/api/unflatten/'.Str::uuid().'.php',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.json'),
@@ -52,7 +52,7 @@ it('should nest a file from JSON to PHP', function () {
 
 it('should nest a file from PHP to JSON', function () {
     $response = $this->post(
-        '/api/v1/unflatten/'.Str::uuid().'.json',
+        '/api/unflatten/'.Str::uuid().'.json',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.php'),
@@ -67,7 +67,7 @@ it('should nest a file from PHP to JSON', function () {
 
 it('should nest a file from CSV to PHP', function () {
     $response = $this->post(
-        '/api/v1/unflatten/'.Str::uuid().'.php',
+        '/api/unflatten/'.Str::uuid().'.php',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.csv'),
@@ -82,7 +82,7 @@ it('should nest a file from CSV to PHP', function () {
 
 it('should nest a file from CSV to JSON', function () {
     $response = $this->post(
-        '/api/v1/unflatten/'.Str::uuid().'.json',
+        '/api/unflatten/'.Str::uuid().'.json',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.csv'),
@@ -97,7 +97,7 @@ it('should nest a file from CSV to JSON', function () {
 
 it('should not allow nesting a file to CSV', function () {
     $response = $this->post(
-        '/api/v1/unflatten/'.Str::uuid().'.csv',
+        '/api/unflatten/'.Str::uuid().'.csv',
         [
             'file' => new UploadedFile(
                 base_path('tests/__snapshots__/flat.csv'),

@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get(
-    '/health',
+    '/api/health',
     function () {
         return response()->json(
             [
@@ -29,16 +29,16 @@ Route::get(
 );
 
 Route::post(
-    '/flatten/{flatFilename}',
+    '/api/flatten/{flatFilename}',
     Api\FlattenController::class
 );
 
 Route::post(
-    '/unflatten/{unflatFilename}',
+    '/api/unflatten/{unflatFilename}',
     Api\UnflattenController::class
 );
 
 Route::post(
-    '/convert/{convertedFilename}',
+    '/api/convert/{convertedFilename}',
     Api\ConvertController::class
 );
