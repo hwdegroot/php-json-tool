@@ -29,7 +29,7 @@ Running at port 8080
 ### Lint
 
 ```
-docker-compose run web lint-php.sh
+docker-compose run web lint
 ```
 
 ### Test
@@ -78,7 +78,9 @@ EXCEPTIONS
 #### Examples
 
 `curl /api/unflatten/unflat.php -F "file=@path/to/flat.json"`
+
 `curl /api/unflatten/unflat.csv -F "file=@path/to/flat.php"`
+
 `curl /api/unflatten/unflat.json -F "file=@path/to/flat.php"`
 
 
@@ -108,8 +110,11 @@ EXCEPTIONS
 #### Examples
 
 `curl /api/flatten/flat.php -F "file=@path/to/nested.json"`
+
 `curl /api/flatten/flat.json -F "file=@path/to/nested.php"`
+
 `curl /api/flatten/flat.csv -F "file=@path/to/nested.json"`
+
 `curl /api/flatten/flat.csv -F "file=@path/to/nested.php"`
 
 
@@ -141,6 +146,8 @@ EXCEPTIONS
 #### Examples
 
 `curl /api/convert/file.php -F "data=@path/to/file.json"`
+
 `curl /api/convert/file.csv -F "data=@path/to/file.php"`
+
 `curl /api/convert/file.json -F "data=@path/to/file.csv"`
 
