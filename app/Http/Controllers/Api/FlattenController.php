@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enum\SupportedFileTypes;
-use APp\Exceptions\ConversionFailedException;
-use Artisan;
+use App\Exceptions\ConversionFailedException;
+use App\Exceptions\UnsupportedFiletypeException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class FlattenController extends Controller
 {

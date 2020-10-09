@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Enum\SupportedFileTypes;
-use APp\Exceptions\ConversionFailedException;
+use App\Exceptions\ConversionFailedException;
 use App\Exceptions\UnsupportedConversionException;
-use Artisan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class ConvertController extends Controller
 {

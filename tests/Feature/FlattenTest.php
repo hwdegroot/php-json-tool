@@ -3,6 +3,7 @@
 use App\Enum\SupportedFileTypes;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Str;
 use function Tests\assertSnapshotEquals;
 
 it('should flatten a file from PHP to PHP', function () {
