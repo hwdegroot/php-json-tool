@@ -46,6 +46,10 @@ class ConvertController extends Controller
 
         if ($fromType == SupportedFileTypes::PHP) {
             $command = 'serialize:php2json';
+            // Check if '--to-csv is required'
+            if ($toType == SupportedFileTypes::CSV) {
+                $arguments['--to-csv'] = true;
+            }
         } elseif ($fromType == SupportedFileTypes::CSV) {
             $command = 'serialize:csv2php';
 
@@ -54,6 +58,10 @@ class ConvertController extends Controller
             }
         } else {
             $command = 'serialize:json2php';
+            // Check if '--to-csv is required'
+            if ($toType == SupportedFileTypes::CSV) {
+                $arguments['--to-csv'] = true;
+            }
         }
 
         $exitCode = Artisan::call($command, $arguments);
