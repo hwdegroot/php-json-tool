@@ -145,9 +145,9 @@ EXCEPTIONS
 
 #### Examples
 
-`curl /api/convert/file.php -F "data=@path/to/file.json"`
+`curl /api/convert/file.php -F "file=@path/to/file.json"`
 
-`curl /api/convert/file.csv -F "data=@path/to/file.php"`
+`curl /api/convert/file.csv -F "file=@path/to/file.php"`
 
-`curl /api/convert/file.json -F "data=@path/to/file.csv"`
+`curl /api/convert/file.json -F "file=@path/to/file.csv"`
 
