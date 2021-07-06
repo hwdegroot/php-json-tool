@@ -7,7 +7,7 @@ variables:
     GIT_DEPTH: 3
 
 .phpcache:
-    image: registry.gitlab.com/hwdegroot/php-json-tool:7.4
+    image: registry.gitlab.com/hwdegroot/php-json-tool:php-8.0
     stage: lint
     variables:
         APP_NAME: php-json-tool
