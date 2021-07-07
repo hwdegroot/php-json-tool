@@ -35,7 +35,7 @@ docker-compose run web lint
 ### Test
 
 ```
-docker-compose run web test
+docker-compose run web pest
 ```
 
 ## Endpoints
