@@ -22,7 +22,7 @@ class FlattenController extends Controller
         $fromType = $this->getFromFiletype($file);
         $toType = $this->getOutputFiletype($flatFilename);
 
-        $flattenedFile = $this->flatten($file, $fromType, $toType);
+        $flattenedFile = $this->flatten($file->path(), $fromType, $toType);
         if ($fromType == SupportedFileTypes::CSV) {
             throw new UnsupportedFiletypeException('csv is not supported as input type. It is already flattend.');
         }

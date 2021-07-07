@@ -26,7 +26,7 @@ class UnflattenController extends Controller
             throw new UnsupportedFiletypeException('Can not unflatten to CSV');
         }
 
-        $unflattenedFile = $this->unflatten($file, $fromType, $toType);
+        $unflattenedFile = $this->unflatten($file->path(), $fromType, $toType);
 
         return response()->download(
             $unflattenedFile,

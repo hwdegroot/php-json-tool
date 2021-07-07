@@ -26,7 +26,7 @@ class ConvertController extends Controller
             throw new UnsupportedConversionException("Can only convert between same filetypes {$fromType}");
         }
 
-        $convertedFile = $this->convert($file, $fromType, $toType);
+        $convertedFile = $this->convert($file->path(), $fromType, $toType);
 
         return response()->download(
             $convertedFile,
