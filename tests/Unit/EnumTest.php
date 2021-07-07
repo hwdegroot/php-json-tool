@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use App\Enum\Enum;
 use App\Exceptions\EnumException;
 use Illuminate\Support\Str;
+use Tests\Stubs\TestEnum;
 
 it('should throw an exception', function (): void {
     $this->expectException(EnumException::class);
@@ -64,14 +64,3 @@ it('should have a value', function (): void {
 
     $this->assertFalse(TestEnum::hasValue(Str::uuid()));
 });
-
-/**
- * Wrapper class for test purposes.
- *
- * @internal
- */
-final class TestEnum extends Enum
-{
-    const NO_TEST = 'no-test';
-    const TEST = 'test';
-}
