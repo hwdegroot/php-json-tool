@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Serialize;
 
 class PhpToJson extends SerializeCommand
@@ -56,8 +58,8 @@ class PhpToJson extends SerializeCommand
         }
 
         $encoded = (bool) $this->option('to-csv')
-            ? $this->toCsvOutput($contents, (bool) $this->option('out-file') ? PHP_EOL : '')
-            : $encoded = json_encode($contents, JSON_PRETTY_PRINT);
+            ? $this->toCsvOutput($contents, (bool) $this->option('out-file') ? \PHP_EOL : '')
+            : $encoded = json_encode($contents, \JSON_PRETTY_PRINT);
 
         if (!empty($this->option('out-file'))) {
             $outFilePath = $this->option('out-file');

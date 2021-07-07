@@ -7,7 +7,9 @@ variables:
     GIT_DEPTH: 3
 
 .phpcache:
-    image: registry.gitlab.com/hwdegroot/php-json-tool:7.4
+    image:
+        name: registry.gitlab.com/hwdegroot/php-json-tool:php-8.0
+        entrypoint: [""]
     stage: lint
     variables:
         APP_NAME: php-json-tool
@@ -17,7 +19,7 @@ variables:
         paths:
             - vendor/
     before_script:
-        - rm -f .php_cs.cache
+        - rm -f .php-cs-fixer.cache
         - composer install --no-progress
         - app_key=$(php artisan key:generate --show)
         - export APP_KEY=$app_key
@@ -37,7 +39,7 @@ lint:php:syntax:
 lint:php:fix-code-style:
     extends: .phpcache
     script:
-        - vendor/bin/php-cs-fixer fix --no-interaction --show-progress=dots -vvv
+        - vendor/bin/php-cs-fixer fix --no-interaction --show-progress=dots -vvv --dry-run
 
 lint:php:copy-paste:
     extends: .phpcache
@@ -54,6 +56,7 @@ coverage:
     extends: .phpcache
     variables:
         PORT: 9000
+        XDEBUG_MODE: coverage
     script:
         - rm -rf test-reports
         - mkdir test-reports
@@ -62,13 +65,12 @@ coverage:
         - sleep 1
         - vendor/bin/pest
             --coverage
-            --log-junit=test-reports/pest-results.xml | tee test-output.txt
-        - cat test-output.txt | grep --color=never 'Cov'
+            --coverage-cobertura=test-reports/cobertura-results.xml
     artifacts:
         reports:
-            junit: test-reports/pest-results.xml
+            cobertura: test-reports/cobertura-results.xml
     # won't work when output is colored
-    coverage: '/\s*Cov:\s*([0-9.]+)%/'
+    coverage: '/Cov.*?([0-9]+\.[0-9]{2})%/'
 
 
 .deploy:

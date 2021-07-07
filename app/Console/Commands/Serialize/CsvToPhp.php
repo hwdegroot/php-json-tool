@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Serialize;
 
 use Illuminate\Support\Str;
@@ -56,7 +58,7 @@ class CsvToPhp extends SerializeCommand
         }
 
         $generatedContents = (bool) $this->option('to-json')
-            ? json_encode($contents, JSON_PRETTY_PRINT)
+            ? json_encode($contents, \JSON_PRETTY_PRINT)
             : $this->generate($contents)->generate();
 
         if (!empty($this->option('out-file'))) {
@@ -81,7 +83,7 @@ class CsvToPhp extends SerializeCommand
         $result = [];
 
         $lines = array_filter(
-            explode(PHP_EOL, $contents),
+            explode(\PHP_EOL, $contents),
             function ($line) use ($delimiter) {
                 return Str::of($line)
                     ->trim($delimiter)
@@ -113,10 +115,10 @@ class CsvToPhp extends SerializeCommand
      */
     protected function writeFile(string $filename, $contents): void
     {
-        file_put_contents($filename, '<?php'.PHP_EOL.PHP_EOL.'return ');
-        file_put_contents($filename, $contents, FILE_APPEND);
-        file_put_contents($filename, ';', FILE_APPEND);
-        file_put_contents($filename, PHP_EOL, FILE_APPEND);
+        file_put_contents($filename, '<?php'.\PHP_EOL.\PHP_EOL.'return ');
+        file_put_contents($filename, $contents, \FILE_APPEND);
+        file_put_contents($filename, ';', \FILE_APPEND);
+        file_put_contents($filename, \PHP_EOL, \FILE_APPEND);
     }
 
     /**

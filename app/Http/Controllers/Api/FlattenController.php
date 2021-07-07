@@ -1,41 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Enum\SupportedFileTypes;
 use App\Exceptions\ConversionFailedException;
 use App\Exceptions\UnsupportedFiletypeException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
 class FlattenController extends Controller
 {
     /**
-     * @throws \App\Exceptions\UnsupportedFiletypeException
+     * {@inheritdoc}
      */
-    public function __invoke(Request $request, string $flatFilename)
+    protected function validateFileTypes(SupportedFileTypes $fromType, SupportedFileTypes $toType): void
     {
-        $file = $request->file('file');
-
-        $fromType = $this->getFromFiletype($file);
-        $toType = $this->getOutputFiletype($flatFilename);
-
-        $flattenedFile = $this->flatten($file, $fromType, $toType);
         if ($fromType == SupportedFileTypes::CSV) {
             throw new UnsupportedFiletypeException('csv is not supported as input type. It is already flattend.');
         }
-
-        return response()->download(
-            $flattenedFile,
-            $flatFilename,
-            [
-                'Content-Type' => $toType,
-            ]
-        )
-            ->deleteFileAfterSend();
     }
 
-    private function flatten(string $filename, $fromType, $toType)
+    /**
+     * {@inheritdoc}
+     *
+     * @throws ConversionFailedException
+     */
+    protected function process(string $filename, SupportedFileTypes $fromType, SupportedFileTypes $toType)
     {
         $tmpFile = stream_get_meta_data(tmpfile());
         $arguments = [
@@ -60,9 +51,11 @@ class FlattenController extends Controller
 
         if ($exitCode === 0) {
             if ($fromType == $toType) {
-                $response = $this->flatten(
+                $response = $this->process(
                     $tmpFile['uri'],
-                    $fromType == SupportedFileTypes::PHP ? SupportedFileTypes::JSON : SupportedFileTypes::PHP,
+                    $fromType == SupportedFileTypes::PHP ?
+                        SupportedFileTypes::create(SupportedFileTypes::JSON) :
+                        SupportedFileTypes::create(SupportedFileTypes::PHP),
                     $toType
                 );
                 // Remove the intermediate file.

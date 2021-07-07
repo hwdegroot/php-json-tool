@@ -1,4 +1,4 @@
-FROM php:7.4-fpm
+FROM php:8.0-fpm
 
 MAINTAINER Rik de Groot <hwdegroot@gmail.com>
 
@@ -37,12 +37,11 @@ RUN docker-php-source extract && \
 RUN docker-php-ext-install \
       bcmath \
       mbstring  \
-      json \
       xml
 
 RUN echo "memory_limit = -1" > /usr/local/etc/php/conf.d/zz-php-memory.ini && \
     echo "zend_extension=$(find /usr/local/lib/php/extensions/ -name xdebug.so)" > /usr/local/etc/php/conf.d/zz-xdebug.ini && \
-    echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/zz-xdebug.ini && \
+    echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/zz-xdebug.ini && \
     echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/zz-xdebug.ini
 
 RUN mkdir -p $COMPOSER_HOME/bin /run/php/ && \

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Serialize;
 
 use Laminas\Code\Generator\ValueGenerator;
@@ -59,7 +61,7 @@ class JsonToPhp extends SerializeCommand
         }
 
         $generatedContents = (bool) $this->option('to-csv')
-            ? $this->toCsvOutput($decoded, PHP_EOL)
+            ? $this->toCsvOutput($decoded, \PHP_EOL)
             : $generatedContents = $this->generate($decoded);
 
         if (!empty($this->option('out-file'))) {
@@ -84,10 +86,10 @@ class JsonToPhp extends SerializeCommand
      */
     protected function writeFile(string $filename, $contents): void
     {
-        file_put_contents($filename, '<?php'.PHP_EOL.PHP_EOL.'return ');
-        file_put_contents($filename, $contents, FILE_APPEND);
-        file_put_contents($filename, ';', FILE_APPEND);
-        file_put_contents($filename, PHP_EOL, FILE_APPEND);
+        file_put_contents($filename, '<?php'.\PHP_EOL.\PHP_EOL.'return ');
+        file_put_contents($filename, $contents, \FILE_APPEND);
+        file_put_contents($filename, ';', \FILE_APPEND);
+        file_put_contents($filename, \PHP_EOL, \FILE_APPEND);
     }
 
     /**

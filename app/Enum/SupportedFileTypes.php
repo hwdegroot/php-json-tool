@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enum;
 
 use App\Exceptions\EnumException;
@@ -21,6 +23,29 @@ class SupportedFileTypes extends Enum
     }
 
     /**
+     * Verify is a certain filetype is supported.
+     */
+    public static function isFiletypeSupported(string $fileType): bool
+    {
+        return \in_array(
+            strtolower($fileType),
+            array_keys(static::shortNames())
+        );
+    }
+
+    /**
+     * Create an instance from the shortname.
+     */
+    public static function fromShortName(string $fileType): self
+    {
+        if (!static::isFiletypeSupported($fileType)) {
+            throw new UnsupportedFiletypeException("{$fileType} is not supported");
+        }
+
+        return static::create(static::shortNames()[$fileType]);
+    }
+
+    /**
      * {@inheritdoc}
      *
      * @throws \App\Exceptions\UnsupportedFiletypeException when key does not exist on enum
@@ -30,9 +55,7 @@ class SupportedFileTypes extends Enum
         try {
             parent::setValue($value);
         } catch (EnumException $e) {
-            throw new UnsupportedFiletypeException('Filetype \''.Str::lower($value).'\' is not supported. '.'Use one of '.implode('|', array_map(function ($key) {
-                return Str::lower($key);
-            }, static::keys(), ), ));
+            throw new UnsupportedFiletypeException('Filetype \''.Str::lower($value).'\' is not supported. '.'Use one of '.implode('|', array_map(fn ($key) => Str::lower($key), static::keys(), ), ));
         }
     }
 
@@ -67,5 +90,17 @@ class SupportedFileTypes extends Enum
         $key = static::all()[$type] ?? $type;
 
         return new static($key);
+    }
+
+    /**
+     * Allowd shortnames.
+     */
+    private static function shortNames(): array
+    {
+        return [
+            'php' => static::PHP,
+            'json' => static::JSON,
+            'csv' => static::CSV,
+        ];
     }
 }

@@ -1,42 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Enum\SupportedFileTypes;
 use App\Exceptions\ConversionFailedException;
 use App\Exceptions\UnsupportedFiletypeException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
 class UnflattenController extends Controller
 {
     /**
-     * @throws \App\Exceptions\UnsupportedFiletypeException
+     * {@inheritdoc}
      */
-    public function __invoke(Request $request, string $unflatFilename)
+    protected function validateFileTypes(SupportedFileTypes $fromType, SupportedFileTypes $toType): void
     {
-        $file = $request->file('file');
-
-        $fromType = $this->getFromFiletype($file);
-        $toType = $this->getOutputFiletype($unflatFilename);
-
         if ($toType == SupportedFileTypes::CSV) {
             throw new UnsupportedFiletypeException('Can not unflatten to CSV');
         }
-
-        $unflattenedFile = $this->unflatten($file, $fromType, $toType);
-
-        return response()->download(
-            $unflattenedFile,
-            $unflatFilename,
-            [
-                'Content-Type' => $toType,
-            ]
-        )
-            ->deleteFileAfterSend();
     }
 
-    private function unflatten(string $filename, SupportedFileTypes $fromType, SupportedFileTypes $toType)
+    protected function process(string $filename, SupportedFileTypes $fromType, SupportedFileTypes $toType)
     {
         $tmpFile = stream_get_meta_data(tmpfile());
         $arguments = [
@@ -62,7 +47,7 @@ class UnflattenController extends Controller
 
         if ($exitCode === 0) {
             if ($fromType == $toType) {
-                return $this->unflatten(
+                return $this->process(
                     $tmpFile['uri'],
                     $fromType == SupportedFileTypes::PHP
                         ? SupportedFileTypes::create(SupportedFileTypes::JSON)

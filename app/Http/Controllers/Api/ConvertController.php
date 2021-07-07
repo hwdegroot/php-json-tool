@@ -1,42 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Enum\SupportedFileTypes;
 use App\Exceptions\ConversionFailedException;
 use App\Exceptions\UnsupportedConversionException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
 class ConvertController extends Controller
 {
     /**
-     * @throws \App\Exceptions\UnsupportedFiletypeException
+     * {@inheritdoc}
      */
-    public function __invoke(Request $request, string $convertedFilename)
+    protected function validateFileTypes(SupportedFileTypes $fromType, SupportedFileTypes $toType): void
     {
-        $file = $request->file('file');
-
-        $fromType = $this->getFromFiletype($file);
-        $toType = $this->getOutputFiletype($convertedFilename);
-
         if ($toType == $fromType) {
             throw new UnsupportedConversionException("Can only convert between same filetypes {$fromType}");
         }
-
-        $convertedFile = $this->convert($file, $fromType, $toType);
-
-        return response()->download(
-            $convertedFile,
-            $convertedFilename,
-            [
-                'Content-Type' => $toType,
-            ]
-        )
-            ->deleteFileAfterSend();
     }
 
-    private function convert(string $filename, SupportedFileTypes $fromType, SupportedFileTypes $toType)
+    /**
+     * {@inheritdoc}
+     */
+    protected function process(string $filename, SupportedFileTypes $fromType, SupportedFileTypes $toType)
     {
         $tmpFile = stream_get_meta_data(tmpfile());
         $arguments = [

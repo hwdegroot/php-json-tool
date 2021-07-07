@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands\Serialize;
 
 use App\Console\Exceptions\MissingArgumentException;
@@ -39,7 +41,7 @@ abstract class SerializeCommand extends Command
         return File::get($filename);
     }
 
-    protected function writeToConsole($contents, bool $rawData = false)
+    protected function writeToConsole($contents, bool $rawData = false): void
     {
         if (!$rawData) {
             $this->line('---8<-----------------------------------------------------------------');
@@ -141,6 +143,6 @@ abstract class SerializeCommand extends Command
     protected function writeFile(string $filename, $contents): void
     {
         file_put_contents($filename, $contents);
-        file_put_contents($filename, PHP_EOL, FILE_APPEND);
+        file_put_contents($filename, \PHP_EOL, \FILE_APPEND);
     }
 }
