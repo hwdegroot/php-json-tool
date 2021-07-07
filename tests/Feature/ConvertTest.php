@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Enum\SupportedFileTypes;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use function Tests\assertSnapshotEquals;
 
-it('should convert a file from PHP to JSON', function () {
+it('should convert a file from PHP to JSON', function (): void {
     $response = $this->post(
         '/api/convert/'.Str::uuid().'.php',
         [
@@ -21,7 +23,7 @@ it('should convert a file from PHP to JSON', function () {
     assertSnapshotEquals('nested.php', $response);
 });
 
-it('should convert a file from JSON to PHP', function () {
+it('should convert a file from JSON to PHP', function (): void {
     $response = $this->post(
         '/api/convert/'.Str::uuid().'.json',
         [
@@ -36,7 +38,7 @@ it('should convert a file from JSON to PHP', function () {
     assertSnapshotEquals('nested.json', $response);
 });
 
-it('should convert a file from CSV to PHP', function () {
+it('should convert a file from CSV to PHP', function (): void {
     $response = $this->post(
         '/api/convert/'.Str::uuid().'.php',
         [
@@ -64,7 +66,7 @@ it('should convert a file from CSV to PHP', function () {
     assertSnapshotEquals('flat-unmodified.php', $response);
 });
 
-it('should convert a file from CSV to JSON', function () {
+it('should convert a file from CSV to JSON', function (): void {
     $response = $this->post(
         '/api/convert/'.Str::uuid().'.json',
         [
@@ -92,7 +94,7 @@ it('should convert a file from CSV to JSON', function () {
     assertSnapshotEquals('flat-unmodified.json', $response);
 });
 
-it('should not support conversion between same filetypes', function () {
+it('should not support conversion between same filetypes', function (): void {
     $response = $this->post(
         '/api/convert/'.Str::uuid().'.json',
         [

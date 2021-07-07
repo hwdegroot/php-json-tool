@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enum;
 
 use App\Exceptions\EnumException;
@@ -30,9 +32,7 @@ class SupportedFileTypes extends Enum
         try {
             parent::setValue($value);
         } catch (EnumException $e) {
-            throw new UnsupportedFiletypeException('Filetype \''.Str::lower($value).'\' is not supported. '.'Use one of '.implode('|', array_map(function ($key) {
-                return Str::lower($key);
-            }, static::keys(), ), ));
+            throw new UnsupportedFiletypeException('Filetype \''.Str::lower($value).'\' is not supported. '.'Use one of '.implode('|', array_map(fn ($key) => Str::lower($key), static::keys(), ), ));
         }
     }
 

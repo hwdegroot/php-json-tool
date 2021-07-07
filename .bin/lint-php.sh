@@ -10,7 +10,7 @@ echo ""
 echo "----------------------------------"
 echo "      Linting code style          "
 echo "----------------------------------"
-rm .php_cs.cache
+rm .php-cs-fixer.cache
 php-cs-fixer fix \
     --no-interaction \
     --show-progress=dots \

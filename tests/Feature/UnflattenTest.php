@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Enum\SupportedFileTypes;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 use function Tests\assertSnapshotEquals;
 
-it('should nest a file from PHP to PHP', function () {
+it('should nest a file from PHP to PHP', function (): void {
     $response = $this->post(
         '/api/unflatten/'.Str::uuid().'.php',
         [
@@ -21,7 +23,7 @@ it('should nest a file from PHP to PHP', function () {
     assertSnapshotEquals('nested.php', $response);
 });
 
-it('should nest a file from JSON to JSON', function () {
+it('should nest a file from JSON to JSON', function (): void {
     $response = $this->post(
         '/api/unflatten/'.Str::uuid().'.json',
         [
@@ -36,7 +38,7 @@ it('should nest a file from JSON to JSON', function () {
     assertSnapshotEquals('nested.json', $response);
 });
 
-it('should nest a file from JSON to PHP', function () {
+it('should nest a file from JSON to PHP', function (): void {
     $response = $this->post(
         '/api/unflatten/'.Str::uuid().'.php',
         [
@@ -51,7 +53,7 @@ it('should nest a file from JSON to PHP', function () {
     assertSnapshotEquals('nested.php', $response);
 });
 
-it('should nest a file from PHP to JSON', function () {
+it('should nest a file from PHP to JSON', function (): void {
     $response = $this->post(
         '/api/unflatten/'.Str::uuid().'.json',
         [
@@ -66,7 +68,7 @@ it('should nest a file from PHP to JSON', function () {
     assertSnapshotEquals('nested.json', $response);
 });
 
-it('should nest a file from CSV to PHP', function () {
+it('should nest a file from CSV to PHP', function (): void {
     $response = $this->post(
         '/api/unflatten/'.Str::uuid().'.php',
         [
@@ -81,7 +83,7 @@ it('should nest a file from CSV to PHP', function () {
     assertSnapshotEquals('nested.php', $response);
 });
 
-it('should nest a file from CSV to JSON', function () {
+it('should nest a file from CSV to JSON', function (): void {
     $response = $this->post(
         '/api/unflatten/'.Str::uuid().'.json',
         [
@@ -96,7 +98,7 @@ it('should nest a file from CSV to JSON', function () {
     assertSnapshotEquals('nested.json', $response);
 });
 
-it('should not allow nesting a file to CSV', function () {
+it('should not allow nesting a file to CSV', function (): void {
     $response = $this->post(
         '/api/unflatten/'.Str::uuid().'.csv',
         [

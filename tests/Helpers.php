@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests;
 
 use Illuminate\Support\Facades\File;
@@ -20,13 +22,13 @@ function log(...$messages): void
     Log::error(...$messages);
 }
 
-function assertSnapshotEquals(string $snapshotLocation, $response)
+function assertSnapshotEquals(string $snapshotLocation, $response): void
 {
     $snapshot = base_path(
         env('SNAPSHOT_LOCATION', 'tests/__snapshots__')
         .Str::start($snapshotLocation, '/')
     );
-    $responseContents = file_get_contents($response->getFile());
+    $responseContents = file_get_contents($response->getFile()->getRealPath());
 
     PHPUnit::assertEquals(
         File::get($snapshot),

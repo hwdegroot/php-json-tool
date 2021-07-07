@@ -1,16 +1,25 @@
 <?php
+use PhpCsFixer\Finder;
+use PhpCsFixer\Config;
 
-$finder = PhpCsFixer\Finder::create()
+$finder = Finder::create()
     ->exclude('bootstrap')
     ->exclude('public')
     ->exclude('storage')
     ->in(__DIR__);
 
-$config = PhpCsFixer\Config::create()
-    ->setRiskyAllowed(true)
-    ->setRules([
-        '@PHP56Migration' => true,
-        '@PHPUnit60Migration:risky' => true,
+$config = new Config();
+$config->setRiskyAllowed(true);
+return $config->setRules([
+        '@PHP56Migration:risky' => true,
+        '@PHP56Migration:risky' => true,
+        '@PHP70Migration' => true,
+        '@PHP70Migration:risky' => true,
+        '@PHP71Migration' => true,
+        '@PHP71Migration:risky' => true,
+        '@PHP73Migration' => true,
+        '@PHP74Migration' => true,
+        '@PHP74Migration:risky' => true,
         '@Symfony' => true,
         '@Symfony:risky' => true,
         '@PSR2' => true,
@@ -39,7 +48,6 @@ $config = PhpCsFixer\Config::create()
         'no_binary_string' => true,
         'no_extra_blank_lines' => ['tokens' => ['break', 'continue', 'extra', 'return', 'throw', 'use', 'parenthesis_brace_block', 'square_brace_block', 'curly_brace_block']],
         'no_null_property_initialization' => true,
-        'no_short_echo_tag' => true,
         'no_superfluous_elseif' => true,
         'no_unneeded_curly_braces' => true,
         'no_unneeded_final_method' => true,
@@ -51,7 +59,6 @@ $config = PhpCsFixer\Config::create()
         'ordered_imports' => true,
         'php_unit_internal_class' => true,
         'php_unit_method_casing' => true,
-        'php_unit_ordered_covers' => true,
         'php_unit_set_up_tear_down_visibility' => true,
         'php_unit_strict' => false,
         'php_unit_test_annotation' => true,
@@ -69,7 +76,5 @@ $config = PhpCsFixer\Config::create()
         'string_line_ending' => true,
         'yoda_style' => false,
     ])
-    ->setFinder($finder)
-;
+    ->setFinder($finder);
 
-return $config;

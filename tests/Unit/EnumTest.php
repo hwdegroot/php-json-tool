@@ -1,21 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Enum\Enum;
 use App\Exceptions\EnumException;
 use Illuminate\Support\Str;
 
-it('should throw an exception', function () {
+it('should throw an exception', function (): void {
     $this->expectException(EnumException::class);
     $status = TestEnum::create('bla');
 });
 
-it('should instantiate a new instance', function () {
+it('should instantiate a new instance', function (): void {
     $noTest = TestEnum::create('no-test');
     $this->assertEquals(TestEnum::NO_TEST, $noTest);
     $this->assertInstanceOf(TestEnum::class, $noTest);
 });
 
-it('should get all values from the enum', function () {
+it('should get all values from the enum', function (): void {
     $this->assertCount(2, TestEnum::all());
     $this->assertEquals(
         [
@@ -26,7 +28,7 @@ it('should get all values from the enum', function () {
     );
 });
 
-it('should get all values', function () {
+it('should get all values', function (): void {
     $this->assertCount(2, TestEnum::values());
     $this->assertEquals(
         [
@@ -37,7 +39,7 @@ it('should get all values', function () {
     );
 });
 
-it('should get all keys', function () {
+it('should get all keys', function (): void {
     $this->assertCount(2, TestEnum::keys());
     $this->assertEquals(
         [
@@ -48,15 +50,15 @@ it('should get all keys', function () {
     );
 });
 
-it('can be converted to a string value', function () {
+it('can be converted to a string value', function (): void {
     $this->assertSame('test', TestEnum::create('test')->jsonSerialize());
 });
 
-it('can retrieve the value', function () {
+it('can retrieve the value', function (): void {
     $this->assertSame('test', TestEnum::create('test')->getValue());
 });
 
-it('should have a value', function () {
+it('should have a value', function (): void {
     $this->assertTrue(TestEnum::hasValue('test'));
     $this->assertTrue(TestEnum::hasValue(TestEnum::NO_TEST));
 
@@ -65,8 +67,10 @@ it('should have a value', function () {
 
 /**
  * Wrapper class for test purposes.
+ *
+ * @internal
  */
-class TestEnum extends Enum
+final class TestEnum extends Enum
 {
     const NO_TEST = 'no-test';
     const TEST = 'test';
