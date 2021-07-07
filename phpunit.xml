@@ -17,7 +17,12 @@
         processUncoveredFiles="true"
         pathCoverage="true"
         ignoreDeprecatedCodeUnits="true"
-        disableCodeCoverageIgnore="false">
+        disableCodeCoverageIgnore="false"
+    >
+        <include>
+            <directory suffix=".php">./app</directory>
+            <directory suffix=".php">./src</directory>
+        </include>
     </coverage>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">

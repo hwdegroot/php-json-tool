@@ -7,7 +7,7 @@ use Illuminate\Http\UploadedFile;
 
 it('has no file passed fails with InvalidFiletypeException', function (): void {
     $response = $this->post('/api/convert/thisshouldfail.json');
-    $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+    $this->assertEquals(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $response->getStatusCode());
 });
 
 it('has an unsupported file in the input fails with UnsupportedFileTypeException', function (): void {

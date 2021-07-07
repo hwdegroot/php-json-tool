@@ -2,13 +2,35 @@
 
 declare(strict_types=1);
 
+use App\Enum\SupportedFileTypes;
 use App\Exceptions\EnumException;
+use App\Exceptions\UnsupportedFiletypeException;
 use Illuminate\Support\Str;
 use Tests\Stubs\TestEnum;
 
 it('should throw an exception', function (): void {
     $this->expectException(EnumException::class);
-    $status = TestEnum::create('bla');
+    TestEnum::create('bla');
+});
+
+it('should convert from shortnames', function (): void {
+    $this->assertEquals(
+        SupportedFileTypes::JSON,
+        SupportedFileTypes::fromShortName('json')
+    );
+    $this->assertEquals(
+        SupportedFileTypes::CSV,
+        SupportedFileTypes::fromShortName('csv')
+    );
+    $this->assertEquals(
+        SupportedFileTypes::PHP,
+        SupportedFileTypes::fromShortName('php')
+    );
+});
+
+it('should not convert from unknown shortnames', function (): void {
+    $this->expectException(UnsupportedFiletypeException::class);
+    SupportedFileTypes::fromShortName('xxx');
 });
 
 it('should instantiate a new instance', function (): void {
