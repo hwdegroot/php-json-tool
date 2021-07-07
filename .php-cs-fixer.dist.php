@@ -6,6 +6,7 @@ $finder = Finder::create()
     ->exclude('bootstrap')
     ->exclude('public')
     ->exclude('storage')
+    ->exclude('tests/__snapshots__')
     ->in(__DIR__);
 
 $config = new Config();
