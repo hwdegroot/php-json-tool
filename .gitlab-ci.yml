@@ -7,7 +7,9 @@ variables:
     GIT_DEPTH: 3
 
 .phpcache:
-    image: registry.gitlab.com/hwdegroot/php-json-tool:php-8.0
+    image:
+        name: registry.gitlab.com/hwdegroot/php-json-tool:php-8.0
+        entrypoint: [""]
     stage: lint
     variables:
         APP_NAME: php-json-tool
@@ -17,7 +19,7 @@ variables:
         paths:
             - vendor/
     before_script:
-        - rm -f .php_cs.cache
+        - rm -f .php-cs-fixer.cache
         - composer install --no-progress
         - app_key=$(php artisan key:generate --show)
         - export APP_KEY=$app_key
