@@ -65,8 +65,7 @@ coverage:
         - sleep 1
         - vendor/bin/pest
             --coverage
-            --log-junit=test-reports/pest-results.xml | tee test-output.txt
-        - cat test-output.txt | grep --color=never 'Cov'
+            --log-junit=test-reports/pest-results.xml
     artifacts:
         reports:
             junit: test-reports/pest-results.xml

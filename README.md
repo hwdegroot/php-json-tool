@@ -1,3 +1,6 @@
+[![coverage report](https://gitlab.com/hwdegroot/php-json-tool/badges/main/coverage.svg)](https://gitlab.com/hwdegroot/php-json-tool/-/commits/main)
+[![pipeline status](https://gitlab.com/hwdegroot/php-json-tool/badges/main/pipeline.svg)](https://gitlab.com/hwdegroot/php-json-tool/-/commits/main)
+
 An api to convert between json files and php associative arrays or export as CSV.
 
 See [Examples](#endpoints) for more detail on the usage
