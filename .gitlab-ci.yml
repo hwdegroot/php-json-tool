@@ -56,6 +56,7 @@ coverage:
     extends: .phpcache
     variables:
         PORT: 9000
+        XDEBUG_MODE: coverage
     script:
         - rm -rf test-reports
         - mkdir test-reports
