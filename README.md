@@ -92,7 +92,7 @@ EXCEPTIONS
 `curl /api/unflatten/unflat.csv -d "file=@path/to/flat.php -H"Input-Format: php" -H"Content-Type: text/x-php"`
 
 `curl /api/unflatten/unflat.json -F file=@path/to/flat.php`
-`curl /api/unflatten/unflat.json -d @path/to/flat.php -H"Input-Format: php"` -H"Content-Type: text/x-php"
+`curl /api/unflatten/unflat.json -d @path/to/flat.php -H"Input-Format: php" -H"Content-Type: text/x-php"`
 
 
 ### flatten nested structures
@@ -129,13 +129,13 @@ EXCEPTIONS
 `curl /api/flatten/flat.php -d @path/to/nested.json -H"Input-Format: json" -H"Content-Type: application/json"`
 
 `curl /api/flatten/flat.json -F file=@path/to/nested.php`
-`curl /api/flatten/flat.json -d @path/to/nested.php -H"Input-Format: php"` -H"Content-Type: text/x-php"
+`curl /api/flatten/flat.json -d @path/to/nested.php -H"Input-Format: php" -H"Content-Type: text/x-php"`
 
 `curl /api/flatten/flat.csv -F file=@path/to/nested.json`
 `curl /api/flatten/flat.csv -d @path/to/nested.json -H"Input-Format: json" -H"Content-Type: application/json"`
 
 `curl /api/flatten/flat.csv -F file=@path/to/nested.php`
-`curl /api/flatten/flat.csv -d @path/to/nested.php -H"Input-Format: php"` -H"Content-Type: text/x-php"
+`curl /api/flatten/flat.csv -d @path/to/nested.php -H"Input-Format: php" -H"Content-Type: text/x-php"`
 
 
 ### Conversion between types
@@ -174,8 +174,8 @@ EXCEPTIONS
 `curl /api/convert/file.php -d =@path/to/file.json -H"Input-Format: json" -H"Content-Type: application/json"`
 
 `curl /api/convert/file.csv -F file=@path/to/file.php`
-`curl /api/convert/file.csv -d @path/to/file.php -H"Input-Format: php"` -H"Content-Type: text/x-php"
+`curl /api/convert/file.csv -d @path/to/file.php -H"Input-Format: php" -H"Content-Type: text/x-php"`
 
 `curl /api/convert/file.json -F file=@path/to/file.csv`
-`curl /api/convert/file.json -d @path/to/file.csv -H"Input-Format: csv"` -H"Content-Type: text/plain"
+`curl /api/convert/file.json -d @path/to/file.csv -H"Input-Format: csv" -H"Content-Type: text/plain"`
 
