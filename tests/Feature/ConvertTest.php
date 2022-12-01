@@ -6,6 +6,7 @@ use App\Enum\SupportedFileTypes;
 use Illuminate\Http\Response;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
+
 use function Tests\assertSnapshotEquals;
 
 it('should convert a file from PHP to JSON', function (): void {

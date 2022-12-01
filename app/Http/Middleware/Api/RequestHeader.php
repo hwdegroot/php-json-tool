@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware\Api;
 
-use Closure;
 use Illuminate\Support\Str;
 
 class RequestHeader
@@ -17,7 +16,7 @@ class RequestHeader
      *
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, \Closure $next)
     {
         if (!$request->wantsJson() && Str::startsWith($request->path(), 'api/')) {
             // Add Json header to request
