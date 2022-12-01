@@ -63,12 +63,7 @@ coverage:
         - export APP_URL=http://localhost:${PORT}
         - php artisan serve --port=${PORT} &
         - sleep 1
-        - vendor/bin/pest
-            --coverage
-            --coverage-cobertura=test-reports/cobertura-results.xml
-    artifacts:
-        reports:
-            cobertura: test-reports/cobertura-results.xml
+        - vendor/bin/pest --coverage
     # won't work when output is colored
     coverage: '/Cov.*?([0-9]+\.[0-9]{2})%/'
 
@@ -84,14 +79,6 @@ coverage:
         - echo SOURCE_VERSION=$CI_COMMIT_SHA >> .env
     script:
         - dpl --skip_cleanup --provider=heroku --app=$HEROKU_APP --api-key=$HEROKU_API_KEY --strategy=api
-
-deploy_staging:
-    extends: .deploy
-    variables:
-        HEROKU_APP: php-json-tool-staging
-    except:
-        - tags
-    when: manual
 
 deploy_production:
     extends: .deploy
