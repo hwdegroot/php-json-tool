@@ -55,7 +55,7 @@ class SupportedFileTypes extends Enum
         try {
             parent::setValue($value);
         } catch (EnumException $e) {
-            throw new UnsupportedFiletypeException('Filetype \''.Str::lower($value).'\' is not supported. '.'Use one of '.implode('|', array_map(fn ($key) => Str::lower($key), static::keys(), ), ));
+            throw new UnsupportedFiletypeException('Filetype \''.Str::lower($value).'\' is not supported. Use one of '.implode('|', array_map(fn ($key) => Str::lower($key), static::keys())));
         }
     }
 

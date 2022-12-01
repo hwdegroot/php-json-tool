@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -32,7 +31,7 @@ class Handler extends ExceptionHandler
      *
      * @throws \Exception
      */
-    public function report(Throwable $exception): void
+    public function report(\Throwable $exception): void
     {
         parent::report($exception);
     }
@@ -46,7 +45,7 @@ class Handler extends ExceptionHandler
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function render($request, Throwable $exception)
+    public function render($request, \Throwable $exception)
     {
         if ($this->isHttpException($exception)) {
             return response()->json(
