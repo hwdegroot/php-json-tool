@@ -24,7 +24,7 @@ git clone https://gitlab.com/hwdegroot/php-json-tool.git
 ### Run
 
 ```
-docker-compose up --build
+docker compose up --build
 ```
 
 Running at port 8080
@@ -32,13 +32,13 @@ Running at port 8080
 ### Lint
 
 ```
-docker-compose run web lint
+docker compose run web lint
 ```
 
 ### Test
 
 ```
-docker-compose run web pest
+docker compose run web pest
 ```
 
 ## Endpoints
@@ -50,7 +50,10 @@ GET /api/health
 
 Response 200
 ```
-`curl /api/health`
+
+```sh
+curl /api/health
+```
 
 
 ### Nest flat structures

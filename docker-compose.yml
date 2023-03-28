@@ -1,7 +1,6 @@
 version: '3.3'
 services:
     web:
-        image: registry.gitlab.com/hwdegroot/php-json-tool:${TAG:-php-8.0}
         build: .
         command: 'chgrp www-data -R storage bootstrap/cache &&
                   chmod -R ug+rwx storage bootstrap/cache &&
